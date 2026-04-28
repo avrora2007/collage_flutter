@@ -10,8 +10,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Title ('A', HitType.hit))),
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(child: Title('A', HitType.hit)),
+        appBar: AppBar(title: Align(alignment: Alignment.centerLeft, child: Text("Bridle"))),
+      ),
     );
   }
 }
@@ -24,8 +27,8 @@ class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 100,
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
         color: switch (hitType) {
@@ -37,5 +40,16 @@ class Title extends StatelessWidget {
       ),
       child: Center(child: Text(letter.toUpperCase())),
     );
+  }
+}
+
+class GamePage extends StatelessWidget {
+  GamePage({super.key});
+
+  final Game _game = Game();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
