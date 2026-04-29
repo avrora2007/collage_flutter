@@ -38,7 +38,8 @@ class GamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
-      child: Column(spacing: 5.0, children: [for (final guess in _game.guesses) Row(spacing: 5.0, children: [for (final letter in guess) Title(letter.char, letter.type)])]),
+      child: Column(
+        spacing: 5.0, children: [for (final guess in _game.guesses) Row(spacing: 5.0, children: [for (final letter in guess) Title(letter.char, letter.type)])]),
     );
   }
 }
