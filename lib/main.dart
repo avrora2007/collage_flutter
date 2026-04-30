@@ -58,6 +58,7 @@ class GuessInput extends StatelessWidget {
   final Function(String) onSubmitGuess;
   final TextEditingController _textEditingController = TextEditingController();
   GuessInput({super.key, required this.onSubmitGuess});
+  final FocusNode _focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +68,18 @@ class GuessInput extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
+              controller: _textEditingController,
               maxLength: 5, 
               decoration: InputDecoration(labelText: "Enter your guess", border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)))),
               onSubmitted: (input) {
-                print(_textEditingController.text);
+                _textEditingController.clear(); _focus.requestFocus();
               },
             ),
           ),
-        ),
+        ), 
+        IconButton(onPressed:() {
+          onSubmitGuess(_textEditingController.text.trim()); _textEditingController.clear(); _focus.requestFocus();
+          }, icon: Icon(Icons.arrow_circle_up), padding: EdgeInsets.zero,)
       ],
     );
   }
@@ -93,3 +98,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
