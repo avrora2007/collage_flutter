@@ -12,9 +12,11 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
       width: 60,
       height: 60,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.bounceIn,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
         color: switch (hitType) {
