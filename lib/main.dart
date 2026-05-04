@@ -29,29 +29,40 @@ class Title extends StatelessWidget {
   }
 }
 
-class GamePage extends StatelessWidget {
-  GamePage({super.key});
-
+class _GamePageState extends State<GamePage> {
   final Game _game = Game();
 
-  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
       child: Column(
-        spacing: 5.0, 
-        children: [for (final guess in _game.guesses) 
-          Row(
-            spacing: 5.0,
-            children: [for (final letter in guess) Title(letter.char, letter.type)]
+        spacing: 5.0,
+        children: [
+          for (final guess in _game.guesses)
+            Row(
+              spacing: 5.0,
+              children: [
+                for (final letter in guess) Title(letter.char, letter.type),
+              ],
+            ),
+          GuessInput(
+            onSubmitGuess: (text) {
+              setState(() {
+                _game.guess(text);
+              });
+            },
           ),
-          GuessInput(onSubmitGuess: (text) {
-            print("Тест");
-          })
-        ]
+        ],
       ),
     );
   }
+}
+
+class GamePage extends StatefulWidget {
+  GamePage({super.key});
+
+  @override
+  State<GamePage> createState() => _GamePageState();
 }
 
 class GuessInput extends StatelessWidget {
@@ -69,17 +80,30 @@ class GuessInput extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: TextField(
               controller: _textEditingController,
-              maxLength: 5, 
-              decoration: InputDecoration(labelText: "Enter your guess", border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)))),
+              maxLength: 5,
+              decoration: InputDecoration(
+                labelText: "Enter your guess",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                ),
+              ),
               onSubmitted: (input) {
-                _textEditingController.clear(); _focus.requestFocus();
+                onSubmitGuess(_textEditingController.text.trim());
+                _textEditingController.clear();
+                _focus.requestFocus();
               },
             ),
           ),
-        ), 
-        IconButton(onPressed:() {
-          onSubmitGuess(_textEditingController.text.trim()); _textEditingController.clear(); _focus.requestFocus();
-          }, icon: Icon(Icons.arrow_circle_up), padding: EdgeInsets.zero,)
+        ),
+        IconButton(
+          onPressed: () {
+            onSubmitGuess(_textEditingController.text.trim());
+            _textEditingController.clear();
+            _focus.requestFocus();
+          },
+          icon: Icon(Icons.arrow_circle_up),
+          padding: EdgeInsets.zero,
+        ),
       ],
     );
   }
@@ -93,9 +117,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(child: GamePage()),
-        appBar: AppBar(title: Align(alignment: Alignment.centerLeft, child: Text("Bridle"))),
+        appBar: AppBar(
+          title: Align(alignment: Alignment.centerLeft, child: Text("Bridle")),
+        ),
       ),
     );
   }
 }
-
